@@ -18,6 +18,7 @@ service<http:Service> helloWorld bind helloWorldEP {
         path:"/"
     }
     getConfig(endpoint outboundEP, http:Request request) {
+        http:Response response = new;
         var msg = request.getJsonPayload();
             match msg {
                 json jsonPayload => {
@@ -27,5 +28,7 @@ service<http:Service> helloWorld bind helloWorldEP {
                     log:printError(err.message, err = err);
                 }
             }
+        _ = outboundEP->respond(response);            
+
     }
 }
